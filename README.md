@@ -150,3 +150,7 @@ Most methods lack public implementations, but the following foundational infrast
 - **STONE** (Park et al., ICRA 2026): 128-ch LiDAR + 6 cameras + 4D radar with automated 3D traversability annotation.
 - **ORAD-3D** (Min et al., ICRA 2026): Largest off-road dataset spanning woodlands, farmlands, grasslands, diverse weather.
 - **UT Austin VertiChal:** Platform-specific datasets for vertically challenging terrain.
+
+--- 
+
+Note: This work was done while searching and improving existing methods on traversibility estimation and uneven terrain navigation to autonomously navigate a robot on highly uneven terrain at RBCCPS, IISc Banglore. 
