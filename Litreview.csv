@@ -1,0 +1,66 @@
+" Fankhauser et
+al. [1] (ETH Zurich / ANYbotics)",Only grid mapping no navigation,"Yes, Ros1",,Classical Methods
+Wermelinger et al. [2],Rrt* over gridmap,"Yes, Ros1",,
+" SEB-Naver (Li et al., ZJU FAST-Lab, IROS 2025)",Planning in Se(2) with mpc and kalman filter for mapping,"Yes, Ros1","Input: Lidar PointClouds
+Output: SE(2) Map
+Original Planner: MPC, but also has a complicated high level trajectory generator.",
+"SEM-RRT* (Dong et al., IROS 2025) [10] r",Need to check???,No Codebase or project page,,
+". Jardali et al. (ICRA
+2024) [11] ","Uses gaussian process to find location with least covariance(most sure its safe), and then sets that as a subgoal, navigaties to subgoal with trivial pid","Yes, Ros1",,
+"CAP (Zhang et al., IROS 2025) [12]","Mainly focuses that robot does not tip over, purely analytical. No grid can sample at any point via ordinary krigig(statics tehcnique) and use stability pyrammid(basically a pyrammid drawn from wheels to the cetnre of mass, and a n-gon covering the robot) to see if it will tip over.",,"Input: 2.5D elevation map(lidar)
+Output: Essential safe trajectory 
+Original Planner: Graph based optimzation planner
+
+Pretty much end to end ",
+". T-CBF (Gupta and Xiao, IROS
+2025) [13]","Similar to CAP focusing that robot does not tip over but learning based. Network is a CNN that takes in grid heights,and outputs a scalar value,  and than a kinodynamic model uses this to check if it will tip over.",,"Input: 2.5D elevation map(depth camera)
+Output: Essential safe trajectory 
+Original Planner: MPC based 
+
+Pretty much end to end ",
+Li et al. (ICRA 2026) [14] ,,,,
+" TRG-
+Planner (Lee et al., KAIST, RA-L 2025) [15] c",Simllar to Seb naver where direction is considered but built for legged robots and uses some wavefront propogration method instead,,"Input: 2.5D elevation map(lidar) 
+Output: Essentially safe trajectoru
+Original Planner: A* Based method
+
+Pretty much end to end ",
+"Wild Visual Navigation (WVN, Mattamala et al.,
+ETH/Oxford, 2025) [3]","Passes superpixels to dino for segmentation, small mlp then uses this to generate travesibility estimate in camera perspective not Bev, for training it uses velocity of robot, and online trains really fast. The cost values is probalistic and can thus know OOD.","Yes, Ros1","Input: RGB Images
+Output: Travesibility Score(Map can be formed)
+Original Planner: SDF based custom planner",
+"WayFASTER (Gasparino et al., UIUC, ICRA 2024) [4]","The Receding horizong estimator for terrain classification, and the temporal layer for past frames. Mpc for control. The cost values is discrete.","Partial, Rest was completed","Input: RGB, Depth Images
+Output: 2D BEV Traversibility Map
+Original Planner: MPPI Based",
+" SALON
+(Sivaprakasam et al., CMU, ICRA 2025) [16]",Generates speedmap and costmap with a gaussian process(instead of mlp). Uses probalistic cost as well and has OOD,"Yes, Ros1","Input: RGB Images
+Output: 2D BEV Traversiblity Map
+Original Planner: MPPI based ",
+"V-STRONG (Jung et al., ICRA 2024) [17]",Uses SAM to generate labels over the terrain the robot did not go over for better self supervised training. Though the method was not used by any papers after it.,,"Input: RGB Images
+Output: 2D Traversibility Map
+Original Planner: MPPI Based",
+" (Jeon et
+al., ICRA 2024) [18] ",,,,
+"EVORA (Cai et al., MIT ACL, T-RO 2024) [5] ","Uses an evedential deep learning model, to give out a distribtion of distribution(higher order dirchlet distribtuion), seperates output score into aletoric(terrain it knows but is unreliable ie tall grass(could be muddy or smooth undeneath) and epistemic(thigns it doesn’t know, ice). It also has a new error function instead of cross entorypy loss. Uses rgb + depth, uses mppi","partial, only small planner layer is given","Input: RGB Images and 2.5 Elevation Map
+Output: Dirchlet Distribtuion in form of elevation map
+Original Planner: MPPI based ",
+". PIETRA (Cai et al., MIT ACL + GMU, RA-L 2025)
+[6]",By same authors of Evora but when terrain is OOD instead of considering it as maximum obstacle uses simple phsycis equations to generate some guess. And also has a better kinematic model,"No Codebase, but has a project page with only paper and vidoes","Input: RGB Images and 2.5 Elevation Map
+Output: Dirchlet Distribtuion in form of elevation map
+Original Planner: MPPI based ",
+"MEDIRL (Song
+et al., SNU, ICRA 2026) [19] ","Paper not found ,based off abstract",,,
+"TRAIL (Jia et al., MIT ACL, 2025) [20] ","Complets flips eveyrthign makes the whole terrain into a neural field(neural network function) and then instead of using something like mpc it directly uses gradient descent algorithms and optimizers like adam to generate paths(splines)(after first getting an intial spline from a*) ,no fixed grids, querible anywhere, no random sampling",No Codebase,"Input: LiDAR Point Clouds
+Output: 3D Neural Field
+Original Planner: Gradient Descent
+
+Pretty much end to end",
+"NavMoE (He et al., UMaryland + CMU, ICRA 2026)
+[21] ",Consideres both geometrical(classical) and semantic(neural entwork) features by using a mixture of experts methods similar to modern llm’s. Turns terrain into grids uses mutliple gating layers to chooose the expert and then expert returrns a  discrete cost(with confidence). Path plannign with motion primitives(branching out and cost evalurated),No Codebase,,
+"1Leung
+et al. [22] ",,,,
+". GSAT (Cho et al., ICRA 2026) [23] ",,,,
+MAMOTH,,,,
+Irispath,"Work done at IISc, self supervised, similar to wayfaster, resnet backbone with mlps, outputs costmap, uses z accleration as cost for self supervision",,,
+HDIF,"Original paper from 2203 before even wvn. It otuput bev costmap terrain, self supervised uses imu for labelling. But trains offline and uses resnet backbone not dino.",,,
+Nomad,"End to end apporahc direcotry trajectory, Uses diffusuin to properly handle expolorariton and navigation to a target goal lcoation. Also mostly indoor urban area navigation. Via goal masking it has the goal navigaiton and explorer in one network. End to End apporach no costmap",,,
